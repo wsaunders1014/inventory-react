@@ -9437,50 +9437,24 @@ module.exports = ReactPropTypesSecret;
 var React = __webpack_require__(177);
 var ReactDOM = __webpack_require__(94);
 var app = document.getElementById('app');
+var ProgressBar = __webpack_require__(179);
 //var routes = require('./config/routes');
-var ProgressStep = React.createClass({
-	displayName: 'ProgressStep',
 
-	render: function () {
-		return React.createElement(
-			'div',
-			{ className: "step" + this.props.addClasses },
-			React.createElement('div', { className: 'select-bg' }),
-			React.createElement(
-				'span',
-				null,
-				this.props.text,
-				' '
-			),
-			React.createElement('img', { src: 'img/checkmark.svg' })
-		);
-	}
-});
-var ProgressBar = React.createClass({
-	displayName: 'ProgressBar',
-
-	render: function () {
-		return React.createElement(
-			'div',
-			{ id: 'progress-bar', className: 'clearfix' },
-			React.createElement(ProgressStep, { addClasses: ' active', text: 'SELECT CATEGORIES' }),
-			React.createElement(ProgressStep, { addClasses: ' two', text: 'LARGE ITEMS' }),
-			React.createElement(ProgressStep, { addClasses: ' two', text: 'ADD BOXES' }),
-			React.createElement(ProgressStep, { addClasses: ' three', text: 'REVIEW INVENTORY' }),
-			React.createElement(ProgressStep, { addClasses: '', text: 'COMPLETED' })
-		);
-	}
-});
 var Main = React.createClass({
-	displayName: 'Main',
+  displayName: 'Main',
 
-	render: function () {
-		return React.createElement(
-			'div',
-			{ id: 'wrapper', className: 'clearfix' },
-			React.createElement(ProgressBar, null)
-		);
-	}
+  render: function () {
+    return React.createElement(
+      'div',
+      { style: { minHeight: 'calc(100% - 145px)', overflow: 'visible', width: '100%' } },
+      React.createElement(
+        'div',
+        { id: 'wrapper', className: 'clearfix' },
+        React.createElement(ProgressBar, null),
+        React.createElement('div', { id: 'content', className: 'clearfix' })
+      )
+    );
+  }
 });
 ReactDOM.render(React.createElement(Main, null), app);
 
@@ -21759,6 +21733,55 @@ module.exports = __webpack_require__(19);
 
 module.exports = __webpack_require__(79);
 
+
+/***/ }),
+/* 179 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var React = __webpack_require__(177);
+var ProgressStep = __webpack_require__(180);
+var ProgressBar = React.createClass({
+	displayName: 'ProgressBar',
+
+	render: function () {
+		return React.createElement(
+			'div',
+			{ id: 'progress-bar', className: 'clearfix' },
+			React.createElement(ProgressStep, { addClasses: ' active', text: 'SELECT CATEGORIES' }),
+			React.createElement(ProgressStep, { addClasses: ' two', text: 'LARGE ITEMS' }),
+			React.createElement(ProgressStep, { addClasses: ' two', text: 'ADD BOXES' }),
+			React.createElement(ProgressStep, { addClasses: ' three', text: 'REVIEW INVENTORY' }),
+			React.createElement(ProgressStep, { addClasses: '', text: 'COMPLETED' })
+		);
+	}
+});
+
+module.exports = ProgressBar;
+
+/***/ }),
+/* 180 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var React = __webpack_require__(177);
+var ProgressStep = React.createClass({
+	displayName: "ProgressStep",
+
+	render: function () {
+		return React.createElement(
+			"div",
+			{ className: "step" + this.props.addClasses },
+			React.createElement("div", { className: "select-bg" }),
+			React.createElement(
+				"span",
+				null,
+				this.props.text,
+				" "
+			),
+			React.createElement("img", { src: "img/checkmark.svg" })
+		);
+	}
+});
+module.exports = ProgressStep;
 
 /***/ })
 /******/ ]);
