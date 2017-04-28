@@ -7,10 +7,11 @@ HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 
 module.exports = {
 	entry:[
+		'whatwg-fetch',
 		'./app/index.js'
 	],
 	output:{
-		path: __dirname + '/dist/assets/js',
+		path: __dirname + '/dist/',
 		filename: "index_bundle.js"
 	},
 	module:{
