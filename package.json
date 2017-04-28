@@ -4,9 +4,9 @@
   "description": "React Starter Pack",
   "main": "index.js",
   "scripts": {
-    "build":"webpack",
+    "build": "webpack",
     "production": "webpack -p",
-    "watch":"webpack -w --display-error-details",
+    "watch": "webpack -w --display-error-details",
     "start": "webpack-dev-server",
     "nodeStart": "node server.js"
   },
@@ -21,6 +21,8 @@
     "webpack-dev-server": "^2.4.2"
   },
   "dependencies": {
+    "json-loader": "^0.5.4",
+    "node-mysql": "^0.4.2",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-router": "^2.8.1"

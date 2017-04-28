@@ -10,7 +10,7 @@ module.exports = {
 		'./app/index.js'
 	],
 	output:{
-		path: __dirname + '/dist',
+		path: __dirname + '/dist/assets/js',
 		filename: "index_bundle.js"
 	},
 	module:{

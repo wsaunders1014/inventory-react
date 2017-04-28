@@ -162,10 +162,12 @@ var selected = {
 		setTimeout(function(){$('#item-'+id).find('.number').removeClass('flash')},800);
 	},
 	addCat: function(catName){
-		selected.activeCats.unshift(catName);
+		selected.activeCats.push(catName);
 		selected.categories[catName].isActive = true;
-		$('#ul-holder').find('ul').prepend('<li><div class="cat" id="added-'+catName.split(' ').join('_')+'">'+catName+'</div><div class="close-btn">+</div><div class="number">0</div></li>').find('li:first').addClass('animate-in');
-		checkHeight('#ul-holder');
+		$('#ul-holder').find('ul').append('<li><div class="cat" id="added-'+catName.split(' ').join('_')+'">'+catName+'</div><div class="close-btn">+</div><div class="number">0</div></li>').find('li:last').addClass('animate-in');
+		//checkHeight('#ul-holder');
+		//scrollToBottom('#ul-holder');
+		sbScroll.checkHeight();
 		setTimeout(function(){
 			$('li').removeClass('animate-in');
 			animating = false;
@@ -195,7 +197,7 @@ var selected = {
 		}
 		setTimeout(function(){$('.animate-in').removeClass('animate-in')},500)
 		checkHeight($('#cat-holder'));
-		checkHeight($('#ul-holder'));
+		//checkHeight($('#ul-holder'));
 	},
 	loadBoxes: function(){
 		var category = 'Boxes';
@@ -320,8 +322,7 @@ var selected = {
 				$(this).hide();
 			}
 		})
-		setTimeout(checkHeight,900,'#items-holder');
-		
+		setTimeout(checkHeight,900,'#items-holder');	
 	},
 	loadReview:function(){
 		var review = $('#review-holder');
@@ -638,7 +639,8 @@ $(document).ready(function(){
 			setTimeout(function(){
 				$(that).parent().remove();
 				$(document.getElementById(id.split(' ').join('_'))).removeClass('animate-in');
-				checkHeight('#ul-holder');
+				//checkHeight('#ul-holder');
+				sbScroll.checkHeight();
 			},500);
 		}else{
 			$('#popup').html('<h4>Warning!</h4><p>The category you are trying to remove has selected items! Removing the category will remove previously selected items. Continue?<br/><br/> <div class="btn" id="continue">CONTINUE</div><div class="btn" id="cancel">CANCEL</div>').show();
@@ -657,7 +659,8 @@ $(document).ready(function(){
 				setTimeout(function(){
 					$(that).parent().remove();
 					$(document.getElementById(id.split(' ').join('_'))).removeClass('animate-in');
-					checkHeight('#ul-holder');
+					//checkHeight('#ul-holder');
+					sbScroll.checkHeight();
 				},500);
 				//Clear categories inventory
 				var limit = selected.categories[id].items.length;
@@ -1030,8 +1033,84 @@ var PageTitleNotification = {
 }
 //////// FUNCTIONS BY BHAVESH END /////////////////
 //////////////////// FUNCTIONS ////////////////////
+function ScrollObj(elem){
+	this.parent = elem.parent();
+	this.slider = this.parent.find('.slider');
+	this.trackHeight = this.slider.parent().height();
+	this.sliderOffset = this.slider.offset().top;
+	this.trackOffset = this.parent.find('.slide-track').offset().top;
+	this.sliderHeight = this.slider.height();
+	this.bottomLimit = (this.trackOffset + this.trackHeight) - this.sliderHeight -2;
+	this.inc = Math.abs(this.bottomLimit)/(this.trackHeight - this.sliderHeight);
+	this.checkHeight = function(){
+		var elemH = elem.outerHeight();
+		var catH = this.parent.outerHeight();
+		if(elemH > catH){
+			//scroll already applied
+			if(!elem.hasClass('scroll')){
+				this.parent.addClass('scroll');
+			}
+			
+			this.slider.css({height:(catH/elemH)*this.trackHeight});
+			this.sliderHeight = (catH/elemH)*this.trackHeight;
+			this.bottomLimit = this.trackHeight - this.sliderHeight -2;
+			this.inc = Math.abs(this.bottomLimit)/(this.trackHeight - this.sliderHeight);
 
+		}else{
+			this.parent.removeClass('scroll');
+			this.slider.css({height:0});
+			this.sliderHeight = 0;
+		}
+	}
+	this.scrollTo = function(e,moveY){
+		this.slider.offset({top:moveY});
+		this.sliderOffset = this.slider.offset().top;
+		// if(moveY > 0 && moveY < this.bottomLimit){
+	 // 		this.slider.css({top: moveY});
+	 // 		elem.css({top:-((this.sliderOffset+this.trackOffset)*this.inc)});
+	 // 		this.sliderOffset = e.pageY - sbScroll.trackOffset;
+	 // 	}else if(moveY < 0){
+	 // 		this.slider.css({top: 0});
+	 // 		elem.css({top: 0});
+	 // 	}else if(moveY > this.bottomLimit){
+	 // 		moveY = this.bottomLimit;
+	 // 		this.slider.css({top: moveY});
+	 // 		elem.css({top: moveY});
+	 // 	}
+	}
+}
+
+//on mousedown, get position of mouse on track
+var sbScroll = new ScrollObj($('#ul-holder'));
+$('#ul-holder').next().find('.slider').on('mousedown', function(e){
+	var startingPoint = e.pageY;//-(sbScroll.trackOffset + sbScroll.sliderOffset); //initially 0
+	//e.pageY -sliderOffset
+	$('body').on('mousemove', function(e){
+		
+		var moveY = e.pageY -(startingPoint - sbScroll.sliderOffset);//-sbScroll.trackOffset-startingPoint; 
+	 	sbScroll.scrollTo(e,moveY);
+
+	}).one('mouseup', function(){
+		$(this).off('mousemove');
+	});
+});
+//sbScroll.checkHeight();
 //Checks content height against container height and applies scrolling if necessary.
+function scrollToBottom(elem){
+	var elem = $(elem);
+	var parent = elem.parent();
+	var catH = parent.outerHeight(); //408
+	var elemH = elem.outerHeight(); //609
+	if(elemH > catH){
+		var slider = parent.find('.slider');
+		var sliderH = slider.height();
+		var bottomLimit = catH - elemH-2;
+		var trackHeight = parent.find('.slide-track').height();
+		moveY = trackHeight - sliderH;
+		slider.stop().animate({top: moveY});
+		elem.stop().animate({top:bottomLimit});
+	}
+}
 function checkHeight(elem){
 	//checks height of .holder divs and applies scrolling if the content is taller than container
 	var elem = $(elem);
@@ -1041,14 +1120,9 @@ function checkHeight(elem){
 
 	if(elemH > catH){
 		var currTop = 0;
-		var bottomLimit = catH - elemH; //-201
+		var bottomLimit = catH - elemH-2; //-201
 		var sliderSize = (catH/elemH)*100;
-		
-		
-		
 		var trackSpace = Math.abs(bottomLimit);
-
-		//if(parent.hasClass('scroll')== false){
 			parent.addClass('scroll');
 
 			//ADD SCROLL BAR
@@ -1068,12 +1142,10 @@ function checkHeight(elem){
 				sliderTop = slider.offset().top; //184
 				var startingPoint = e.pageY-sliderTop;
 				$('body').on('mousemove', function(e){
-					var moveY = e.pageY-trackTop-startingPoint;
-				 
+					var moveY = e.pageY-trackTop-startingPoint; 
 				 	if(moveY > 0 && moveY < trackHeight - sliderH){
 				 		sliderTop = slider.offset().top;
 				 		slider.css({top: moveY});
-				 		
 				 		elem.css({top:-((sliderTop-trackTop)*inc)});
 				 		currTop = -((sliderTop-trackTop)*inc);
 				 	}else if(moveY < 0){
