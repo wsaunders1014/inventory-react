@@ -9442,12 +9442,25 @@ module.exports = ReactPropTypesSecret;
 
 /***/ }),
 /* 80 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_promise_polyfill__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_promise_polyfill___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_promise_polyfill__);
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _promisePolyfill = __webpack_require__(101);
+
+var _promisePolyfill2 = _interopRequireDefault(_promisePolyfill);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 var React = __webpack_require__(20);
 var ReactDOM = __webpack_require__(102);
 var app = document.getElementById('app');
@@ -9459,44 +9472,84 @@ var Sidebar = __webpack_require__(86);
 
 // To add to window
 if (!window.Promise) {
-  window.Promise = __WEBPACK_IMPORTED_MODULE_0_promise_polyfill___default.a;
+  window.Promise = _promisePolyfill2.default;
 }
 
-class Main extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { total: 0, totalVol: 0, totalWeight: 0, user: {} };
+var Main = function (_React$Component) {
+  _inherits(Main, _React$Component);
+
+  function Main(props) {
+    _classCallCheck(this, Main);
+
+    var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
+
+    _this.state = {
+      total: 0,
+      totalVol: 0,
+      totalWeight: 0,
+      inventory_obj: {
+        "categories": {
+          "Sofas & Couches": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
+          "Dressers & Cabinets": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false", "Dining", "Office", "Bedroom", "Entertainment"], "total": "0" },
+          "Tables & Chairs": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false", "Dining", "Coffee & End Tables", "Living Room", "Office", "Patio", "Other"], "total": "0" },
+          "Desks": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
+          "Musical Instruments": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
+          "TVs & Electronics": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false", "TVs", "Stereos", "Computers", "Office", "Other"], "total": "0" },
+          "Appliances": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false", "Kitchen", "Laundry", "Other"], "total": "0" },
+          "Bookcases": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
+          "Beds & Cribs": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false", "Mattress Only", "Mattress & Box Spring", "Bed Frames", "Futons", "Nursery", "Other"], "total": "0" },
+          "Futons": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
+          "Children & Nursery": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
+          "Lamps & Mirrors": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
+          "Motorcycles & ATVs": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
+          "Tools": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
+          "Sports & Hobbies": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
+          "Miscellaneous": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
+          "Boxes": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" }
+        }
+      }
+    };
+    return _this;
   }
-  render() {
-    return React.createElement(
-      'div',
-      { style: { minHeight: 'calc(100% - 145px)', overflow: 'visible', width: '100%' } },
-      React.createElement(
+
+  _createClass(Main, [{
+    key: 'render',
+    value: function render() {
+      return React.createElement(
         'div',
-        { id: 'wrapper', className: 'clearfix' },
-        React.createElement(ProgressBar, null),
-        console.log(this.state),
+        { style: { minHeight: 'calc(100% - 145px)', overflow: 'visible', width: '100%' } },
         React.createElement(
           'div',
-          { id: 'content', className: 'clearfix' },
-          React.createElement(Container, { id: 'categories', heading: 'Please <bold>Select</bold> The Categories That Apply To Your Move' }),
-          React.createElement(Sidebar, { id: 'sidebar', heading: 'Your Categories' })
+          { id: 'wrapper', className: 'clearfix' },
+          React.createElement(ProgressBar, null),
+          React.createElement(
+            'div',
+            { id: 'content', className: 'clearfix' },
+            React.createElement(Container, { id: 'categories', type: 'categories', user: this.state, heading: 'Please <bold>Select</bold> The Categories That Apply To Your Move' }),
+            React.createElement(Sidebar, { id: 'sidebar', heading: 'Your Categories' })
+          )
         )
-      )
-    );
-  }
-  componentDidMount() {
-    var that = this;
-    fetch('/inv/test').then(function (response) {
-      if (response.status >= 400) {
-        throw new Error('Bad response from server');
-      }
-      return response.json();
-    }).then(function (data) {
-      that.setState({ user: data[0] });
-    });
-  }
-}
+      );
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var that = this;
+      fetch('/inv/test').then(function (response) {
+        if (response.status >= 400) {
+          throw new Error('Bad response from server');
+        }
+        return response.json();
+      }).then(function (data) {
+        data[0].inventory_obj = JSON.parse(data[0].inventory_obj);
+        that.setState({ user: data[0] });
+      });
+    }
+  }]);
+
+  return Main;
+}(React.Component);
+
 ReactDOM.render(React.createElement(Main, null), app);
 
 /*
@@ -9987,57 +10040,108 @@ App-
 /* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 var React = __webpack_require__(20);
 var Item = __webpack_require__(83);
-var Container = React.createClass({
-	displayName: 'Container',
 
-	render: function () {
-		return React.createElement(
-			'div',
-			{ id: this.props.id, className: 'main' },
-			React.createElement('div', { className: 'heading cancelSelect' }),
-			React.createElement(
-				'div',
-				{ className: 'overflow' },
-				React.createElement(
-					'div',
-					{ id: 'cat-holder', className: 'holder clearfix' },
-					React.createElement(Item, { title: 'Dressers_&_Cabinets' })
-				),
-				React.createElement(
-					'div',
-					{ className: 'slide-track' },
-					React.createElement('div', { className: 'slider' })
-				)
-			)
-		);
-	},
-	componentDidMount: function () {
-		document.getElementById(this.props.id).children[0].innerHTML = this.props.heading;
+var Container = function (_React$Component) {
+	_inherits(Container, _React$Component);
+
+	function Container() {
+		_classCallCheck(this, Container);
+
+		return _possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).apply(this, arguments));
 	}
-});
+
+	_createClass(Container, [{
+		key: 'render',
+		value: function render() {
+			var _this2 = this;
+
+			return React.createElement(
+				'div',
+				{ id: this.props.id, className: 'main' },
+				React.createElement('div', { className: 'heading cancelSelect' }),
+				React.createElement(
+					'div',
+					{ className: 'overflow' },
+					React.createElement(
+						'div',
+						{ className: 'holder clearfix' },
+						Object.keys(this.props.user.inventory_obj.categories).map(function (item, index) {
+							console.log(_this2.props.user.inventory_obj.categories[item].isActive);
+							if (_this2.props.user.inventory_obj.categories[item].isActive == "true") return React.createElement(Item, { key: item, title: item, className: 'item selected', index: index });else return React.createElement(Item, { key: item, title: item, className: 'item', index: index });
+						})
+					),
+					React.createElement(
+						'div',
+						{ className: 'slide-track' },
+						React.createElement('div', { className: 'slider' })
+					)
+				)
+			);
+		}
+	}, {
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			document.getElementById(this.props.id).children[0].innerHTML = this.props.heading;
+		}
+	}]);
+
+	return Container;
+}(React.Component);
+// function populate(obj){
+// 	console.log(obj)
+// 	for(var x in obj.categories){
+// 		if (!obj.categories.hasOwnProperty(x)) {
+// 	        continue;
+// 	    }
+// 	    console.log(x.toString())
+// 	    return (
+// 	    	{console.log(x)}
+// 		    <Item id={x}></Item>
+// 		    //console.log(x);
+// 		)
+// 	}
+// }
+
+
 module.exports = Container;
 
 /***/ }),
 /* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 var React = __webpack_require__(20);
 var Item = React.createClass({
-	displayName: "Item",
+	displayName: 'Item',
 
-	render: function () {
+	render: function render() {
+		var x = -(133 * (this.props.index % 4));
+		var y = -(133 * Math.floor(this.props.index / 4));
 		return React.createElement(
-			"div",
-			{ className: "item", id: this.props.title },
-			React.createElement("div", { className: "img" }),
+			'div',
+			{ className: this.props.className, id: this.props.title },
+			React.createElement('div', { className: 'img', style: { backgroundPosition: x + 'px ' + y + 'px' } }),
 			React.createElement(
-				"div",
-				{ className: "bottom" },
+				'div',
+				{ className: 'bottom' },
 				React.createElement(
-					"h4",
-					{ className: "cancelSelect" },
+					'h4',
+					{ className: 'cancelSelect' },
 					this.props.title.split('_').join(' ')
 				)
 			)
@@ -10050,12 +10154,15 @@ module.exports = Item;
 /* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 var React = __webpack_require__(20);
 var ProgressStep = __webpack_require__(85);
 var ProgressBar = React.createClass({
 	displayName: 'ProgressBar',
 
-	render: function () {
+	render: function render() {
 		return React.createElement(
 			'div',
 			{ id: 'progress-bar', className: 'clearfix' },
@@ -10074,11 +10181,14 @@ module.exports = ProgressBar;
 /* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 var React = __webpack_require__(20);
 var ProgressStep = React.createClass({
 	displayName: "ProgressStep",
 
-	render: function () {
+	render: function render() {
 		return React.createElement(
 			"div",
 			{ className: "step" + this.props.addClasses },
@@ -10099,11 +10209,14 @@ module.exports = ProgressStep;
 /* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
+"use strict";
+
+
 var React = __webpack_require__(20);
 var Sidebar = React.createClass({
 	displayName: "Sidebar",
 
-	render: function () {
+	render: function render() {
 		return React.createElement(
 			"div",
 			{ id: this.props.id, className: "sidebar" },
@@ -10120,7 +10233,7 @@ var Sidebar = React.createClass({
 			React.createElement("div", { className: "back-btn" })
 		);
 	},
-	componentDidMount: function () {
+	componentDidMount: function componentDidMount() {
 		document.getElementById(this.props.id).children[0].children[0].innerHTML = this.props.heading;
 	}
 });
