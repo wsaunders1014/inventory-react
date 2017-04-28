@@ -13,36 +13,38 @@ function handle_database(req,res){
 	pool.getConnection(function(err,connection){
 		if(err){
 			connection.release();
-			//res.json({"code" : 100, "status" : "Error in connection database"});
-			console.log('Error')
+			 res.json({"code" : 100, "status" : "Error in connection database"});
            return;
 		}
 		console.log('connected as id ' + connection.threadId);
-	 	connection.query("select * from inventory_will WHERE session_id = 'test'",function(err,rows){
+	 	connection.query("select * from inventory_will WHERE session_id = '"+req.params.session_id+"'",function(err,rows){
              connection.release();
              if(!err) {
-                 console.log(rows);
+                res.json(rows);
              }           
          });
  
          connection.on('error', function(err) {      
-               console.log("Error in connection database");
+               res.json({"code" : 100, "status" : "Error in connection database"});
                return;     
          });
 	});
-	console.log('test');
 }
 var app = express();
 
-app.use(express.static(__dirname+'/dist/assets/'));
-app.get("*",function(req,res,next){
+app.use(express.static(__dirname+'/dist/'));
+// app.get("/inv/:session_id", function(req,res,next){
+// 	handle_database(req,res);
+// 	next()
+// });
+app.get("/",function(req,res){
 	res.sendFile('index.html',{root:__dirname+'/dist/'});
-	next();
+	//next();
 });
-
-app.get("/", function(req,res){
+app.get("/inv/:session_id", function(req,res){
 	handle_database(req,res);
 });
+
 
 app.listen(3000, function(){
 	console.log(`App listening on port 3000!`);
