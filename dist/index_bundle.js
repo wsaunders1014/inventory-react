@@ -9513,6 +9513,12 @@ var Main = function (_React$Component) {
   }
 
   _createClass(Main, [{
+    key: 'selectCategory',
+    value: function selectCategory(cat) {
+      //onClick, make Category
+      this.setState({ inventory_obj: { 'categories': { cat: { 'isActive': "true" } } } });
+    }
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
@@ -9525,8 +9531,8 @@ var Main = function (_React$Component) {
           React.createElement(
             'div',
             { id: 'content', className: 'clearfix' },
-            React.createElement(Container, { id: 'categories', type: 'categories', user: this.state, heading: 'Please <bold>Select</bold> The Categories That Apply To Your Move' }),
-            React.createElement(Sidebar, { id: 'sidebar', heading: 'Your Categories' })
+            React.createElement(Container, { id: 'categories', type: 'categories', select: this.selectCategory, user: this.state, heading: 'Please <bold>Select</bold> The Categories That Apply To Your Move' }),
+            React.createElement(Sidebar, { id: 'sidebar', heading: 'Your Categories', user: this.state })
           )
         )
       );
@@ -10057,10 +10063,13 @@ var Item = __webpack_require__(83);
 var Container = function (_React$Component) {
 	_inherits(Container, _React$Component);
 
-	function Container() {
+	function Container(props) {
 		_classCallCheck(this, Container);
 
-		return _possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).apply(this, arguments));
+		var _this = _possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).call(this, props));
+
+		console.log(props);
+		return _this;
 	}
 
 	_createClass(Container, [{
@@ -10078,9 +10087,9 @@ var Container = function (_React$Component) {
 					React.createElement(
 						'div',
 						{ className: 'holder clearfix' },
+						console.log(this.props),
 						Object.keys(this.props.user.inventory_obj.categories).map(function (item, index) {
-							console.log(_this2.props.user.inventory_obj.categories[item].isActive);
-							if (_this2.props.user.inventory_obj.categories[item].isActive == "true") return React.createElement(Item, { key: item, title: item, className: 'item selected', index: index });else return React.createElement(Item, { key: item, title: item, className: 'item', index: index });
+							if (_this2.props.user.inventory_obj.categories[item].isActive == "true") return React.createElement(Item, { select: _this2.props.selectCategory, key: item, title: item, className: 'item selected', index: index });else return React.createElement(Item, { select: _this2.props.selectCategory, key: item, title: item, className: 'item', index: index });
 						})
 					),
 					React.createElement(
@@ -10100,21 +10109,6 @@ var Container = function (_React$Component) {
 
 	return Container;
 }(React.Component);
-// function populate(obj){
-// 	console.log(obj)
-// 	for(var x in obj.categories){
-// 		if (!obj.categories.hasOwnProperty(x)) {
-// 	        continue;
-// 	    }
-// 	    console.log(x.toString())
-// 	    return (
-// 	    	{console.log(x)}
-// 		    <Item id={x}></Item>
-// 		    //console.log(x);
-// 		)
-// 	}
-// }
-
 
 module.exports = Container;
 
@@ -10125,29 +10119,65 @@ module.exports = Container;
 "use strict";
 
 
-var React = __webpack_require__(20);
-var Item = React.createClass({
-	displayName: 'Item',
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	render: function render() {
-		var x = -(133 * (this.props.index % 4));
-		var y = -(133 * Math.floor(this.props.index / 4));
-		return React.createElement(
-			'div',
-			{ className: this.props.className, id: this.props.title },
-			React.createElement('div', { className: 'img', style: { backgroundPosition: x + 'px ' + y + 'px' } }),
-			React.createElement(
-				'div',
-				{ className: 'bottom' },
-				React.createElement(
-					'h4',
-					{ className: 'cancelSelect' },
-					this.props.title.split('_').join(' ')
-				)
-			)
-		);
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(20);
+
+var Item = function (_React$Component) {
+	_inherits(Item, _React$Component);
+
+	function Item(props) {
+		_classCallCheck(this, Item);
+
+		var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
+
+		console.log(props);
+		_this.state = { className: _this.props.className };
+		_this.handleClick = _this.handleClick.bind(_this);
+		return _this;
 	}
-});
+
+	_createClass(Item, [{
+		key: 'handleClick',
+		value: function handleClick(e) {
+			this.props.selectCategory(e.target.id.split('_').join(' '));
+			this.setState({ className: "item animate-out" });
+			var that = this;
+			setTimeout(function () {
+				that.setState({ className: "item selected" });
+			}, 400);
+		}
+	}, {
+		key: 'render',
+		value: function render() {
+			var x = -(133 * (this.props.index % 4));
+			var y = -(133 * Math.floor(this.props.index / 4));
+			return React.createElement(
+				'div',
+				{ className: this.state.className, id: this.props.title.split(' ').join('_'), onClick: this.handleClick },
+				React.createElement('div', { className: 'img', style: { backgroundPosition: x + 'px ' + y + 'px' } }),
+				React.createElement(
+					'div',
+					{ className: 'bottom' },
+					React.createElement(
+						'h4',
+						{ className: 'cancelSelect' },
+						this.props.title.split('_').join(' ')
+					)
+				)
+			);
+		}
+	}]);
+
+	return Item;
+}(React.Component);
+
 module.exports = Item;
 
 /***/ }),
