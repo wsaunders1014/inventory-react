@@ -356,6 +356,7 @@ bold {
   height: 0;
   padding-bottom: 98.5%;
   border-radius: 11px;
+  pointer-events: none;
 }
 #wrapper .main .item .bottom {
   height: 34px;

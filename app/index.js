@@ -42,15 +42,19 @@ class Main extends React.Component{
       }
     }
   }
+  selectCategory(cat){
+    //onClick, make Category
+    this.setState({inventory_obj:{'categories':{cat:{'isActive': "true"}}}});
+  }
 	render(){
 		return (
 		<div style={{minHeight:'calc(100% - 145px)',overflow:'visible',width:'100%'}}>
-			<div id="wrapper" className="clearfix">
+			<div id="wrapper" className="clearfix" >
 				<ProgressBar/>
         {/*console.log(this.state)*/}
 				<div id="content" className="clearfix">
-          <Container id="categories" type="categories" user={this.state} heading="Please <bold>Select</bold> The Categories That Apply To Your Move" />
-				  <Sidebar id="sidebar" heading="Your Categories"/>
+          <Container id="categories" type="categories" select={this.selectCategory} user={this.state} heading="Please <bold>Select</bold> The Categories That Apply To Your Move" />
+				  <Sidebar id="sidebar" heading="Your Categories" user={this.state} />
         </div>
 			</div>
 		</div>
