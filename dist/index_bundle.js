@@ -9484,31 +9484,34 @@ var Main = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
     _this.state = {
-      total: 0,
-      totalVol: 0,
-      totalWeight: 0,
-      inventory_obj: {
-        "categories": {
-          "Sofas & Couches": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
-          "Dressers & Cabinets": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false", "Dining", "Office", "Bedroom", "Entertainment"], "total": "0" },
-          "Tables & Chairs": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false", "Dining", "Coffee & End Tables", "Living Room", "Office", "Patio", "Other"], "total": "0" },
-          "Desks": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
-          "Musical Instruments": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
-          "TVs & Electronics": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false", "TVs", "Stereos", "Computers", "Office", "Other"], "total": "0" },
-          "Appliances": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false", "Kitchen", "Laundry", "Other"], "total": "0" },
-          "Bookcases": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
-          "Beds & Cribs": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false", "Mattress Only", "Mattress & Box Spring", "Bed Frames", "Futons", "Nursery", "Other"], "total": "0" },
-          "Futons": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
-          "Children & Nursery": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
-          "Lamps & Mirrors": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
-          "Motorcycles & ATVs": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
-          "Tools": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
-          "Sports & Hobbies": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
-          "Miscellaneous": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" },
-          "Boxes": { "items": ["false"], "itemCount": ["false"], "isActive": "false", "sub_categories": ["false"], "total": "0" }
+      user: {
+        total: 0,
+        totalVol: 0,
+        totalWeight: 0,
+        inventory_obj: {
+          "categories": {
+            "Sofas & Couches": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false], "total": 0 },
+            "Dressers & Cabinets": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false, "Dining", "Office", "Bedroom", "Entertainment"], "total": 0 },
+            "Tables & Chairs": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false, "Dining", "Coffee & End Tables", "Living Room", "Office", "Patio", "Other"], "total": 0 },
+            "Desks": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false], "total": 0 },
+            "Musical Instruments": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false], "total": 0 },
+            "TVs & Electronics": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false, "TVs", "Stereos", "Computers", "Office", "Other"], "total": 0 },
+            "Appliances": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false, "Kitchen", "Laundry", "Other"], "total": 0 },
+            "Bookcases": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false], "total": 0 },
+            "Beds & Cribs": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false, "Mattress Only", "Mattress & Box Spring", "Bed Frames", "Futons", "Nursery", "Other"], "total": 0 },
+            "Futons": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false], "total": 0 },
+            "Children & Nursery": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false], "total": 0 },
+            "Lamps & Mirrors": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false], "total": 0 },
+            "Motorcycles & ATVs": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false], "total": 0 },
+            "Tools": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false], "total": 0 },
+            "Sports & Hobbies": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false], "total": 0 },
+            "Miscellaneous": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false], "total": 0 },
+            "Boxes": { "items": [false], "itemCount": [false], "isActive": false, "sub_categories": [false], "total": 0 }
+          }
         }
       }
     };
+    _this.selectCategory = _this.selectCategory.bind(_this);
     return _this;
   }
 
@@ -9516,7 +9519,10 @@ var Main = function (_React$Component) {
     key: 'selectCategory',
     value: function selectCategory(cat) {
       //onClick, make Category
-      this.setState({ inventory_obj: { 'categories': { cat: { 'isActive': "true" } } } });
+      //console.log(this.state);
+      this.setState(function (prevState, props) {
+        return prevState.user.inventory_obj.categories[cat].isActive = true;
+      });
     }
   }, {
     key: 'render',
@@ -9531,8 +9537,8 @@ var Main = function (_React$Component) {
           React.createElement(
             'div',
             { id: 'content', className: 'clearfix' },
-            React.createElement(Container, { id: 'categories', type: 'categories', select: this.selectCategory, user: this.state, heading: 'Please <bold>Select</bold> The Categories That Apply To Your Move' }),
-            React.createElement(Sidebar, { id: 'sidebar', heading: 'Your Categories', user: this.state })
+            React.createElement(Container, { id: 'categories', type: 'categories', selectCategory: this.selectCategory, user: this.state.user, heading: 'Please <bold>Select</bold> The Categories That Apply To Your Move' }),
+            React.createElement(Sidebar, { id: 'sidebar', heading: 'Your Categories', user: this.state.user })
           )
         )
       );
@@ -10066,10 +10072,7 @@ var Container = function (_React$Component) {
 	function Container(props) {
 		_classCallCheck(this, Container);
 
-		var _this = _possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).call(this, props));
-
-		console.log(props);
-		return _this;
+		return _possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).call(this, props));
 	}
 
 	_createClass(Container, [{
@@ -10087,9 +10090,9 @@ var Container = function (_React$Component) {
 					React.createElement(
 						'div',
 						{ className: 'holder clearfix' },
-						console.log(this.props),
 						Object.keys(this.props.user.inventory_obj.categories).map(function (item, index) {
-							if (_this2.props.user.inventory_obj.categories[item].isActive == "true") return React.createElement(Item, { select: _this2.props.selectCategory, key: item, title: item, className: 'item selected', index: index });else return React.createElement(Item, { select: _this2.props.selectCategory, key: item, title: item, className: 'item', index: index });
+							console.log(_this2.props.user.inventory_obj.categories[item].isActive);
+							if (_this2.props.user.inventory_obj.categories[item].isActive !== true) return React.createElement(Item, { selectCategory: _this2.props.selectCategory, key: item, title: item, className: 'item', index: index });else return React.createElement(Item, { selectCategory: _this2.props.selectCategory, key: item, title: item, className: 'item selected', index: index });
 						})
 					),
 					React.createElement(
@@ -10137,7 +10140,6 @@ var Item = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 
-		console.log(props);
 		_this.state = { className: _this.props.className };
 		_this.handleClick = _this.handleClick.bind(_this);
 		return _this;
@@ -10146,16 +10148,27 @@ var Item = function (_React$Component) {
 	_createClass(Item, [{
 		key: 'handleClick',
 		value: function handleClick(e) {
-			this.props.selectCategory(e.target.id.split('_').join(' '));
 			this.setState({ className: "item animate-out" });
+			e.persist();
 			var that = this;
+			var e = e;
 			setTimeout(function () {
+				that.props.selectCategory(e.target.id.split('_').join(' '));
 				that.setState({ className: "item selected" });
 			}, 400);
 		}
 	}, {
+		key: 'componentWillReceiveProps',
+		value: function componentWillReceiveProps(nextProps) {
+			if (this.props.className !== nextProps.className) {
+
+				this.setState({ className: nextProps.className });
+			}
+		}
+	}, {
 		key: 'render',
 		value: function render() {
+			//console.log(this.state)
 			var x = -(133 * (this.props.index % 4));
 			var y = -(133 * Math.floor(this.props.index / 4));
 			return React.createElement(
@@ -10242,31 +10255,68 @@ module.exports = ProgressStep;
 "use strict";
 
 
-var React = __webpack_require__(20);
-var Sidebar = React.createClass({
-	displayName: "Sidebar",
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	render: function render() {
-		return React.createElement(
-			"div",
-			{ id: this.props.id, className: "sidebar" },
-			React.createElement(
-				"div",
-				{ className: "wrapper" },
-				React.createElement("div", { className: "heading cancelSelect" }),
-				React.createElement(
-					"div",
-					{ className: "overflow" },
-					React.createElement("div", { className: "holder" })
-				)
-			),
-			React.createElement("div", { className: "back-btn" })
-		);
-	},
-	componentDidMount: function componentDidMount() {
-		document.getElementById(this.props.id).children[0].children[0].innerHTML = this.props.heading;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(20);
+var SideItem = __webpack_require__(190);
+
+var Sidebar = function (_React$Component) {
+	_inherits(Sidebar, _React$Component);
+
+	function Sidebar(props) {
+		_classCallCheck(this, Sidebar);
+
+		return _possibleConstructorReturn(this, (Sidebar.__proto__ || Object.getPrototypeOf(Sidebar)).call(this, props));
 	}
-});
+
+	_createClass(Sidebar, [{
+		key: 'render',
+		value: function render() {
+			var _this2 = this;
+
+			return React.createElement(
+				'div',
+				{ id: this.props.id, className: 'sidebar' },
+				React.createElement(
+					'div',
+					{ className: 'wrapper' },
+					React.createElement('div', { className: 'heading cancelSelect' }),
+					React.createElement(
+						'div',
+						{ className: 'overflow' },
+						React.createElement(
+							'div',
+							{ className: 'holder' },
+							React.createElement(
+								'ul',
+								null,
+								Object.keys(this.props.user.inventory_obj.categories).map(function (item, index) {
+									if (_this2.props.user.inventory_obj.categories[item].isActive) return React.createElement(SideItem, { key: item, user: _this2.props.user, category: item, index: index });
+								})
+							)
+						)
+					)
+				),
+				React.createElement('div', { className: 'back-btn' })
+			);
+		}
+	}, {
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			document.getElementById(this.props.id).children[0].children[0].innerHTML = this.props.heading;
+		}
+	}]);
+
+	return Sidebar;
+}(React.Component);
+
+;
 module.exports = Sidebar;
 
 /***/ }),
@@ -23037,6 +23087,70 @@ module.exports = g;
 __webpack_require__(81);
 module.exports = __webpack_require__(80);
 
+
+/***/ }),
+/* 189 */,
+/* 190 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var React = __webpack_require__(20);
+
+var SideItem = function (_React$Component) {
+	_inherits(SideItem, _React$Component);
+
+	function SideItem(props) {
+		_classCallCheck(this, SideItem);
+
+		return _possibleConstructorReturn(this, (SideItem.__proto__ || Object.getPrototypeOf(SideItem)).call(this, props));
+	}
+
+	_createClass(SideItem, [{
+		key: "handleClick",
+		value: function handleClick(e) {
+
+			var that = this;
+			setTimeout(function () {}, 400);
+		}
+	}, {
+		key: "render",
+		value: function render() {
+			return React.createElement(
+				"li",
+				null,
+				React.createElement(
+					"div",
+					{ className: "cat", id: "added-" + this.props.category.split(' ').join('_') },
+					this.props.category
+				),
+				React.createElement(
+					"div",
+					{ className: "close-btn" },
+					"+"
+				),
+				React.createElement(
+					"div",
+					{ className: "number" },
+					this.props.user.inventory_obj.categories[this.props.category].total
+				)
+			);
+		}
+	}]);
+
+	return SideItem;
+}(React.Component);
+
+module.exports = SideItem;
 
 /***/ })
 /******/ ]);

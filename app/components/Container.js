@@ -3,7 +3,6 @@ var Item = require('./Item');
 class Container extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(props)
 	}
 	render(){
 		return (
@@ -11,14 +10,13 @@ class Container extends React.Component {
 				<div className="heading cancelSelect"></div>
 				<div className="overflow">
 					<div className="holder clearfix">
-						{console.log(this.props)}
 						{
 							Object.keys(this.props.user.inventory_obj.categories).map((item,index)=>{
-								if(this.props.user.inventory_obj.categories[item].isActive=="true")
-									return <Item select={this.props.selectCategory} key={item} title={item} className="item selected" index={index}></Item>
+								console.log(this.props.user.inventory_obj.categories[item].isActive)
+								if(this.props.user.inventory_obj.categories[item].isActive!==true)
+									return <Item selectCategory={this.props.selectCategory} key={item} title={item} className="item" index={index}></Item>
 								else
-									return <Item select={this.props.selectCategory} key={item} title={item} className="item" index={index}></Item>
-
+									return <Item selectCategory={this.props.selectCategory} key={item} title={item} className="item selected" index={index}></Item>
 							})
 						}
 					</div>
