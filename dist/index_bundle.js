@@ -9979,7 +9979,7 @@ var Container = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).call(this, props));
 
-		_this.state = { containerHeight: 0, contentHeight: 0, currentCategory: '' };
+		_this.state = { containerHeight: 0, contentHeight: 0, currentCategory: '', heading: _this.props.heading };
 		return _this;
 	}
 
@@ -9993,7 +9993,7 @@ var Container = function (_React$Component) {
 				{ id: this.props.id, className: 'main', ref: function ref(container) {
 						_this2.domObj = container;
 					} },
-				React.createElement('div', { className: 'heading cancelSelect' }),
+				React.createElement('div', { className: 'heading cancelSelect', dangerouslySetInnerHTML: { __html: this.props.heading } }),
 				React.createElement(
 					'div',
 					{ className: 'overflow' },
@@ -10014,8 +10014,6 @@ var Container = function (_React$Component) {
 	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
-			console.log(this);
-			document.getElementById(this.props.id).children[0].innerHTML = this.props.heading;
 			this.setState({ containerHeight: this.domObj.children[1].clientHeight, contentHeight: this.domObj.children[1].firstChild.clientHeight });
 		}
 	}]);
@@ -10193,7 +10191,7 @@ var Sidebar = function (_React$Component) {
 
 			return React.createElement(
 				'div',
-				{ id: this.props.id, className: 'sidebar' },
+				{ id: this.props.id, className: 'sidebar', style: { left: this.props.left } },
 				React.createElement(
 					'div',
 					{ className: 'wrapper' },
@@ -23257,10 +23255,7 @@ var Categories = function (_React$Component) {
 	function Categories(props) {
 		_classCallCheck(this, Categories);
 
-		var _this = _possibleConstructorReturn(this, (Categories.__proto__ || Object.getPrototypeOf(Categories)).call(this, props));
-
-		console.log(_this.props);
-		return _this;
+		return _possibleConstructorReturn(this, (Categories.__proto__ || Object.getPrototypeOf(Categories)).call(this, props));
 	}
 
 	_createClass(Categories, [{
@@ -23311,20 +23306,22 @@ var Items = function (_React$Component) {
 	function Items(props) {
 		_classCallCheck(this, Items);
 
-		var _this = _possibleConstructorReturn(this, (Items.__proto__ || Object.getPrototypeOf(Items)).call(this, props));
-
-		console.log(_this.props);
-		return _this;
+		return _possibleConstructorReturn(this, (Items.__proto__ || Object.getPrototypeOf(Items)).call(this, props));
 	}
+	// componentWillReceiveProps(nextProps) {
+	// 	//console.log('nextProps:',nextProps)
+	// 	if(typeof getFirstActiveCat(nextProps.user.inventory_obj.categories) != 'undefined'){
+	// 		var activeCat = getFirstActiveCat(nextProps.user.inventory_obj.categories)
+	// 		this.setState({heading:activeCat})
+	// 	}
+	// }
+
 
 	_createClass(Items, [{
 		key: 'render',
 		value: function render() {
-			return React.createElement(
-				Container,
-				{ id: this.props.id, heading: this.props.heading },
-				'test'
-			);
+			console.log(this.props);
+			return React.createElement(Container, { id: this.props.id, heading: this.props.heading });
 		}
 	}]);
 
@@ -29161,8 +29158,34 @@ var Main = function (_React$Component) {
       console.log('save test');
     }
   }, {
+    key: 'addItem',
+    value: function addItem() {
+      console.log('add item');
+    }
+  }, {
+    key: 'removeItem',
+    value: function removeItem() {
+      console.log('remove item');
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var propsObj = {};
+      if (this.props.location.pathname == '/large-items') {
+        propsObj = {
+          user: this.state.user,
+          addItem: this.addItem,
+          removeItem: this.removeItem,
+          items: this.state.items
+        };
+      } else {
+        propsObj = {
+          user: this.state.user,
+          addCategory: this.addCategory,
+          removeCategory: this.removeCategory
+        };
+      }
+      //var propsObj
       return React.createElement(
         'div',
         { style: { minHeight: 'calc(100% - 145px)', overflow: 'visible', width: '100%' } },
@@ -29170,11 +29193,7 @@ var Main = function (_React$Component) {
           'div',
           { id: 'wrapper', className: 'clearfix' },
           React.createElement(ProgressBar, null),
-          this.props.children && React.cloneElement(this.props.children, {
-            user: this.state.user,
-            addCategory: this.addCategory,
-            removeCategory: this.removeCategory
-          }),
+          this.props.children && React.cloneElement(this.props.children, propsObj),
           React.createElement(
             'div',
             { className: 'clearfix' },
@@ -29225,12 +29244,11 @@ var Categories = __webpack_require__(193);
 var Sidebar = __webpack_require__(86);
 
 var SelectCategoryView = function SelectCategoryView(props) {
-	console.log(props);
 	return React.createElement(
 		'div',
 		{ id: 'content', className: 'clearfix' },
 		React.createElement(Categories, { id: 'categories', type: 'categories', addCategory: props.addCategory, user: props.user, heading: 'Please <bold>Select</bold> The Categories That Apply To Your Move' }),
-		React.createElement(Sidebar, { id: 'sidebar', removeCategory: props.removeCategory, heading: 'Your Categories', user: props.user })
+		React.createElement(Sidebar, { id: 'sidebar', removeCategory: props.removeCategory, heading: 'Your Categories', user: props.user, left: '71.789362%' })
 	);
 };
 module.exports = SelectCategoryView;
@@ -29245,16 +29263,32 @@ module.exports = SelectCategoryView;
 var React = __webpack_require__(20);
 var Items = __webpack_require__(195);
 var Sidebar = __webpack_require__(86);
-
+var ReactRouter = __webpack_require__(252);
+var Link = ReactRouter.Link;
 var ItemsView = function ItemsView(props) {
-	console.log(props);
+	var heading = getFirstActiveCat(props.user.inventory_obj.categories);
 	return React.createElement(
 		'div',
 		{ id: 'content', className: 'clearfix' },
-		React.createElement(Items, { id: 'items', type: 'items', addItem: props.addItem, user: props.user, heading: 'Please <bold>Select</bold> The Categories That Apply To Your Move' }),
-		React.createElement(Sidebar, { id: 'sidebar', heading: 'Your Categories', user: props.user })
+		React.createElement(Items, { id: 'items', type: 'items', addItem: props.addItem, removeItem: props.removeItem, items: props.items, user: props.user, heading: heading }),
+		React.createElement(Sidebar, { id: 'sidebar', heading: 'Your Categories', user: props.user, left: '-3.51064%' }),
+		React.createElement(
+			'div',
+			{ id: 'back-btn', className: 'animate-in' },
+			React.createElement(Link, { to: '/categories' })
+		)
 	);
 };
+function getFirstActiveCat(obj) {
+	var keys = Object.keys(obj);
+	//console.log(keys);
+	for (var i = 0; i < keys.length; i++) {
+		if (obj[keys[i]].isActive) {
+			return keys[i];
+			break;
+		}
+	}
+}
 module.exports = ItemsView;
 
 /***/ })

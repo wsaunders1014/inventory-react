@@ -6,7 +6,7 @@ class Sidebar extends React.Component {
 	}
 	render(){
 		return (
-			<div id={this.props.id} className="sidebar">
+			<div id={this.props.id} className="sidebar" style={{left:this.props.left}}>
 				<div className="wrapper">
 					<div className="heading cancelSelect"></div>
 					<div className="overflow">

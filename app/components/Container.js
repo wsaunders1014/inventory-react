@@ -3,15 +3,15 @@ var Slider = require('./Slider');
 class Container extends React.Component {
 	constructor(props) {
 		super(props);
-	
-		this.state= {containerHeight:0,contentHeight:0, currentCategory:''}
+
+		this.state= {containerHeight:0,contentHeight:0, currentCategory:'',heading:this.props.heading}
 	}
 	render(){
 		return (
 			<div id={this.props.id} className='main' ref={(container)=>{
 				this.domObj = container;
 			}}>
-				<div className="heading cancelSelect"></div>
+				<div className="heading cancelSelect" dangerouslySetInnerHTML={{__html:this.props.heading}}/>
 				<div className="overflow">
 					<div className="holder clearfix">
 						{ this.props.children }
@@ -25,8 +25,6 @@ class Container extends React.Component {
 		this.setState({containerHeight:this.domObj.children[1].clientHeight, contentHeight:this.domObj.children[1].firstChild.clientHeight})
 	}
 	componentDidMount() {
-		console.log(this)
-		document.getElementById(this.props.id).children[0].innerHTML = this.props.heading;
 		this.setState({containerHeight:this.domObj.children[1].clientHeight, contentHeight:this.domObj.children[1].firstChild.clientHeight})
 	}
 }
