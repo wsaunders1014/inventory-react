@@ -53,16 +53,34 @@ class Main extends React.Component{
     //TO DO: upload user obj to mysql
     console.log('save test')
   }
+  addItem(){
+    console.log('add item')
+  }
+  removeItem(){
+    console.log('remove item')
+  }
 	render(){
+    var propsObj = {}
+    if(this.props.location.pathname == '/large-items'){
+      propsObj ={
+        user:this.state.user,
+        addItem: this.addItem,
+        removeItem:this.removeItem,
+        items:this.state.items
+      }
+    }else{
+      propsObj ={
+        user:this.state.user,
+        addCategory: this.addCategory,
+        removeCategory:this.removeCategory
+      }
+    }
+    //var propsObj
 		return (
 		<div style={{minHeight:'calc(100% - 145px)',overflow:'visible',width:'100%'}}>
 			<div id="wrapper" className="clearfix" >
 				<ProgressBar/>
-           {this.props.children && React.cloneElement(this.props.children, {
-              user:this.state.user,
-              addCategory: this.addCategory,
-              removeCategory:this.removeCategory
-           })}
+           {this.props.children && React.cloneElement(this.props.children, propsObj)}
         <div className="clearfix">
           <SaveBtn user={this.state.user} save={this.save}/>
         </div>

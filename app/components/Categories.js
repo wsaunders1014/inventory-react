@@ -4,7 +4,6 @@ var Item = require('./Item');
 class Categories extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(this.props)
 	}
 	render(){
 		return(

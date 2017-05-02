@@ -330,7 +330,6 @@ bold {
   background: rgba(236, 236, 236, 0.38);
   border-radius: 10px;
   position: relative;
-  display: none;
 }
 #wrapper .main .overflow {
   overflow-y: hidden;
@@ -1246,6 +1245,10 @@ bold {
   z-index: 100;
   display: none;
   cursor: pointer;
+}
+#wrapper #back-btn a {
+  display: block;
+  height: 100%;
 }
 #popup,
 .modal-box {
