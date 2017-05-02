@@ -10,8 +10,9 @@ class Item extends React.Component {
 		e.persist();
 		var that = this;
 		var e = e;
+		
 		setTimeout(()=>{
-			that.props.selectCategory(e.target.id.split('_').join(' '));
+			that.props.addCategory(e.target.id.split('_').join(' '));
 			that.setState({className:"item selected"});
 		},400)
 	}

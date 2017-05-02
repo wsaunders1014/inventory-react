@@ -230,8 +230,8 @@ bold {
   position: absolute;
   right: 0;
   top: 0;
-  height: 98.3%;
-  top: 5px;
+  height: 407px;
+  top: 0px;
   width: 20px;
   overflow: hidden;
 }
@@ -1219,6 +1219,10 @@ bold {
 #wrapper #save-button {
   float: right;
   position: relative;
+}
+#wrapper #save-button a {
+  display: block;
+  height: 100%;
 }
 #wrapper #save-button span{
   position: absolute;

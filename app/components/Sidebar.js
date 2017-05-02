@@ -15,7 +15,7 @@ class Sidebar extends React.Component {
 						{
 							Object.keys(this.props.user.inventory_obj.categories).map((item,index)=>{
 								if(this.props.user.inventory_obj.categories[item].isActive)
-									return <SideItem key={item} user={this.props.user} category={item} index={index}></SideItem>
+									return <SideItem removeCategory={this.props.removeCategory} key={item} user={this.props.user} category={item} index={index} ></SideItem>
 							})
 						}
 						</ul>

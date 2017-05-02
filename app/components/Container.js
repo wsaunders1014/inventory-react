@@ -1,34 +1,34 @@
 var React = require('react');
-var Item = require('./Item');
+var Slider = require('./Slider');
 class Container extends React.Component {
 	constructor(props) {
 		super(props);
+	
+		this.state= {containerHeight:0,contentHeight:0, currentCategory:''}
 	}
 	render(){
 		return (
-			<div id={this.props.id} className='main'>
+			<div id={this.props.id} className='main' ref={(container)=>{
+				this.domObj = container;
+			}}>
 				<div className="heading cancelSelect"></div>
 				<div className="overflow">
 					<div className="holder clearfix">
-						{
-							Object.keys(this.props.user.inventory_obj.categories).map((item,index)=>{
-								console.log(this.props.user.inventory_obj.categories[item].isActive)
-								if(this.props.user.inventory_obj.categories[item].isActive!==true)
-									return <Item selectCategory={this.props.selectCategory} key={item} title={item} className="item" index={index}></Item>
-								else
-									return <Item selectCategory={this.props.selectCategory} key={item} title={item} className="item selected" index={index}></Item>
-							})
-						}
+						{ this.props.children }
 					</div>
-					<div className="slide-track"><div className="slider"></div></div>
+					<Slider heights={this.state} needsSlider={(this.state.containerHeight >= this.state.contentHeight) ? false:true}></Slider>
 				</div>
 			</div>	
 		)
 	}
-	componentDidMount()  {
-		document.getElementById(this.props.id).children[0].innerHTML = this.props.heading;
+	componentWillReceiveProps(nextProps) {
+		this.setState({containerHeight:this.domObj.children[1].clientHeight, contentHeight:this.domObj.children[1].firstChild.clientHeight})
 	}
-	
+	componentDidMount() {
+		console.log(this)
+		document.getElementById(this.props.id).children[0].innerHTML = this.props.heading;
+		this.setState({containerHeight:this.domObj.children[1].clientHeight, contentHeight:this.domObj.children[1].firstChild.clientHeight})
+	}
 }
 
 module.exports = Container;

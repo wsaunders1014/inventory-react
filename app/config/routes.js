@@ -2,17 +2,19 @@ var React = require('react');
 var ReactRouter = require('react-router');
 var Router = ReactRouter.Router;
 var Route = ReactRouter.Route;
-var hashHistory = ReactRouter.hashHistory;
+var Switch = ReactRouter.Switch;
+var browserHistory = ReactRouter.browserHistory;
 var IndexRoute = ReactRouter.IndexRoute;
-var Main = require('../components/Main');
-var Home = require('../components/Home');
-
+var MainLayout = require('../components/MainLayout');
+var SelectCategoryView = require('../components/views/SelectCategoryView');
+var ItemsView = require('../components/views/ItemsView');
 var routes = (
-	<Router history={hashHistory}>
-		<Route path='/' component= {Main} >
-			<IndexRoute component={Home} />
-			
-		</Route>
+	<Router history={browserHistory}>
+			<Route path="/" component={MainLayout}>
+				<Route path='/categories' component={SelectCategoryView}/>
+				<Route path='/large-items' component={ItemsView} />
+				<IndexRoute component={SelectCategoryView}/>
+			</Route>
 	</Router>
 );
 module.exports = routes;
