@@ -37,13 +37,14 @@ app.use(express.static(__dirname+'/dist/'));
 // 	handle_database(req,res);
 // 	next()
 // });
-app.get("/",function(req,res){
-	res.sendFile('index.html',{root:__dirname+'/dist/'});
-	//next();
-});
 app.get("/inv/:session_id", function(req,res){
 	handle_database(req,res);
 });
+app.get("*",function(req,res){
+	res.sendFile('index.html',{root:__dirname+'/dist/'});
+	//next();
+});
+
 
 
 app.listen(3000, function(){
