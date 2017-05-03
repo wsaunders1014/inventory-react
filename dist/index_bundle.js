@@ -9979,7 +9979,7 @@ var Container = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).call(this, props));
 
-		_this.state = { containerHeight: 0, contentHeight: 0, currentCategory: '', heading: _this.props.heading };
+		_this.state = { containerHeight: 0, contentHeight: 0, heading: _this.props.heading };
 		return _this;
 	}
 
@@ -23106,7 +23106,7 @@ var Slider = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Slider.__proto__ || Object.getPrototypeOf(Slider)).call(this, props));
 
-		_this.state = { sliderOffset: 0, containerHeight: _this.props.heights.containerHeight, contentHeight: _this.props.heights.contentHeight };
+		_this.state = { needsSlider: _this.props.needsSlider, sliderOffset: 0, containerHeight: _this.props.heights.containerHeight, contentHeight: _this.props.heights.contentHeight };
 		_this.mouseDown = _this.mouseDown.bind(_this);
 		_this.mouseMove = _this.mouseMove.bind(_this);
 		_this.mouseUp = _this.mouseUp.bind(_this);
@@ -23142,8 +23142,7 @@ var Slider = function (_React$Component) {
 	}, {
 		key: 'render',
 		value: function render() {
-			var needsSlider = this.props.needsSlider;
-			if (needsSlider) {
+			if (this.state.needsSlider) {
 				return React.createElement(
 					'div',
 					{ className: 'slide-track' },
@@ -23154,7 +23153,8 @@ var Slider = function (_React$Component) {
 	}, {
 		key: 'componentWillReceiveProps',
 		value: function componentWillReceiveProps(nextProps) {
-			this.setState({ containerHeight: this.props.heights.containerHeight, contentHeight: this.props.heights.contentHeight });
+			console.log(nextProps);
+			this.setState({ needsSlider: nextProps.containerHeight >= nextProps.contentHeight ? false : true, containerHeight: nextProps.heights.containerHeight, contentHeight: nextProps.heights.contentHeight });
 		}
 	}]);
 
@@ -23263,15 +23263,23 @@ var Categories = function (_React$Component) {
 		value: function render() {
 			var _this2 = this;
 
-			return React.createElement(
-				Container,
-				{ id: this.props.id, heading: this.props.heading },
-				Object.keys(this.props.user.inventory_obj.categories).map(function (item, index) {
-					if (item != 'Boxes') {
-						if (_this2.props.user.inventory_obj.categories[item].isActive !== true) return React.createElement(Item, { addCategory: _this2.props.addCategory, key: item, title: item, className: 'item', index: index });else return React.createElement(Item, { addCategory: _this2.props.addCategory, key: item, title: item, className: 'item selected', index: index });
-					}
-				})
-			);
+			if (!this.props.doneFetch) {
+				return React.createElement(
+					Container,
+					{ id: this.props.id, heading: this.props.heading },
+					'Loading...'
+				);
+			} else {
+				return React.createElement(
+					Container,
+					{ id: this.props.id, heading: this.props.heading },
+					Object.keys(this.props.user.inventory_obj.categories).map(function (item, index) {
+						if (item != 'Boxes') {
+							if (_this2.props.user.inventory_obj.categories[item].isActive !== true) return React.createElement(Item, { addCategory: _this2.props.addCategory, key: item, title: item, className: 'item', index: index });else return React.createElement(Item, { addCategory: _this2.props.addCategory, key: item, title: item, className: 'item selected', index: index });
+						}
+					})
+				);
+			}
 		}
 	}]);
 
@@ -23303,24 +23311,15 @@ var Item = __webpack_require__(83);
 var Items = function (_React$Component) {
 	_inherits(Items, _React$Component);
 
-	function Items(props) {
+	function Items() {
 		_classCallCheck(this, Items);
 
-		return _possibleConstructorReturn(this, (Items.__proto__ || Object.getPrototypeOf(Items)).call(this, props));
+		return _possibleConstructorReturn(this, (Items.__proto__ || Object.getPrototypeOf(Items)).apply(this, arguments));
 	}
-	// componentWillReceiveProps(nextProps) {
-	// 	//console.log('nextProps:',nextProps)
-	// 	if(typeof getFirstActiveCat(nextProps.user.inventory_obj.categories) != 'undefined'){
-	// 		var activeCat = getFirstActiveCat(nextProps.user.inventory_obj.categories)
-	// 		this.setState({heading:activeCat})
-	// 	}
-	// }
-
 
 	_createClass(Items, [{
 		key: 'render',
 		value: function render() {
-			console.log(this.props);
 			return React.createElement(Container, { id: this.props.id, heading: this.props.heading });
 		}
 	}]);
@@ -29102,6 +29101,7 @@ var Main = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Main.__proto__ || Object.getPrototypeOf(Main)).call(this, props));
 
     _this.state = {
+      doneFetch: false,
       user: {
         total: 0,
         totalVol: 0,
@@ -29128,7 +29128,8 @@ var Main = function (_React$Component) {
           }
         }
       },
-      items: ''
+      items: '',
+      activeCat: ''
     };
     _this.addCategory = _this.addCategory.bind(_this);
     _this.removeCategory = _this.removeCategory.bind(_this);
@@ -29138,17 +29139,23 @@ var Main = function (_React$Component) {
   _createClass(Main, [{
     key: 'addCategory',
     value: function addCategory(cat) {
-      //onClick, make Category
-      //console.log(this.state);
+      var _this2 = this;
+
       this.setState(function (prevState, props) {
-        return prevState.user.inventory_obj.categories[cat].isActive = true;
+        prevState.user.inventory_obj.categories[cat].isActive = true;
+        prevState.activeCat = _this2.getFirstActiveCat(prevState.user.inventory_obj.categories);
+        return prevState;
       });
     }
   }, {
     key: 'removeCategory',
     value: function removeCategory(cat) {
+      var _this3 = this;
+
       this.setState(function (prevState, props) {
-        return prevState.user.inventory_obj.categories[cat].isActive = false;
+        prevState.user.inventory_obj.categories[cat].isActive = false;
+        prevState.activeCat = _this3.getFirstActiveCat(prevState.user.inventory_obj.categories);
+        return prevState;
       });
     }
   }, {
@@ -29176,13 +29183,16 @@ var Main = function (_React$Component) {
           user: this.state.user,
           addItem: this.addItem,
           removeItem: this.removeItem,
-          items: this.state.items
+          items: this.state.items,
+          doneFetch: this.state.doneFetch,
+          activeCat: this.state.activeCat
         };
       } else {
         propsObj = {
           user: this.state.user,
           addCategory: this.addCategory,
-          removeCategory: this.removeCategory
+          removeCategory: this.removeCategory,
+          doneFetch: this.state.doneFetch
         };
       }
       //var propsObj
@@ -29203,8 +29213,22 @@ var Main = function (_React$Component) {
       );
     }
   }, {
+    key: 'getFirstActiveCat',
+    value: function getFirstActiveCat(obj) {
+      var keys = Object.keys(obj);
+      //console.log(keys);
+      for (var i = 0; i < keys.length; i++) {
+        if (obj[keys[i]].isActive) {
+          return keys[i];
+          break;
+        }
+      }
+      return '';
+    }
+  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
+
       var that = this;
       fetch('/inv/test').then(function (response) {
         if (response.status >= 400) {
@@ -29213,7 +29237,8 @@ var Main = function (_React$Component) {
         return response.json();
       }).then(function (data) {
         data[0].inventory_obj = JSON.parse(data[0].inventory_obj);
-        that.setState({ user: data[0] });
+        var x = that.getFirstActiveCat(data[0].inventory_obj.categories);
+        that.setState({ user: data[0], activeCat: x, doneFetch: true });
       });
 
       fetch('/js/items-list.json').then(function (response) {
@@ -29247,7 +29272,7 @@ var SelectCategoryView = function SelectCategoryView(props) {
 	return React.createElement(
 		'div',
 		{ id: 'content', className: 'clearfix' },
-		React.createElement(Categories, { id: 'categories', type: 'categories', addCategory: props.addCategory, user: props.user, heading: 'Please <bold>Select</bold> The Categories That Apply To Your Move' }),
+		React.createElement(Categories, { doneFetch: props.doneFetch, id: 'categories', type: 'categories', addCategory: props.addCategory, user: props.user, heading: 'Please <bold>Select</bold> The Categories That Apply To Your Move' }),
 		React.createElement(Sidebar, { id: 'sidebar', removeCategory: props.removeCategory, heading: 'Your Categories', user: props.user, left: '71.789362%' })
 	);
 };
@@ -29266,11 +29291,10 @@ var Sidebar = __webpack_require__(86);
 var ReactRouter = __webpack_require__(252);
 var Link = ReactRouter.Link;
 var ItemsView = function ItemsView(props) {
-	var heading = getFirstActiveCat(props.user.inventory_obj.categories);
 	return React.createElement(
 		'div',
 		{ id: 'content', className: 'clearfix' },
-		React.createElement(Items, { id: 'items', type: 'items', addItem: props.addItem, removeItem: props.removeItem, items: props.items, user: props.user, heading: heading }),
+		React.createElement(Items, { id: 'items', type: 'items', addItem: props.addItem, removeItem: props.removeItem, items: props.items, user: props.user, heading: props.activeCat }),
 		React.createElement(Sidebar, { id: 'sidebar', heading: 'Your Categories', user: props.user, left: '-3.51064%' }),
 		React.createElement(
 			'div',
@@ -29279,16 +29303,6 @@ var ItemsView = function ItemsView(props) {
 		)
 	);
 };
-function getFirstActiveCat(obj) {
-	var keys = Object.keys(obj);
-	//console.log(keys);
-	for (var i = 0; i < keys.length; i++) {
-		if (obj[keys[i]].isActive) {
-			return keys[i];
-			break;
-		}
-	}
-}
 module.exports = ItemsView;
 
 /***/ })

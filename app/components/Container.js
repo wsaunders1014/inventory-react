@@ -3,8 +3,7 @@ var Slider = require('./Slider');
 class Container extends React.Component {
 	constructor(props) {
 		super(props);
-
-		this.state= {containerHeight:0,contentHeight:0, currentCategory:'',heading:this.props.heading}
+		this.state= {containerHeight:0,contentHeight:0,heading:this.props.heading}
 	}
 	render(){
 		return (
