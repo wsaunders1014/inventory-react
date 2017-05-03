@@ -2,7 +2,7 @@ var React = require('react');
 class Slider extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {sliderOffset:0,containerHeight:this.props.heights.containerHeight,contentHeight:this.props.heights.contentHeight}
+		this.state = {needsSlider:this.props.needsSlider,sliderOffset:0,containerHeight:this.props.heights.containerHeight,contentHeight:this.props.heights.contentHeight}
 		this.mouseDown = this.mouseDown.bind(this);
 		this.mouseMove = this.mouseMove.bind(this);
 		this.mouseUp = this.mouseUp.bind(this);
@@ -31,8 +31,7 @@ class Slider extends React.Component {
 	    e.preventDefault();
 	}
 	render(){
-		const needsSlider = this.props.needsSlider;
-		if(needsSlider){
+		if(this.state.needsSlider){
 			return(
 				<div className="slide-track">
 					<div className="slider" onMouseDown={this.mouseDown}style={{height:(this.state.containerHeight/this.state.contentHeight)*this.state.containerHeight-5+'px', top:this.state.sliderOffset+"px"}}></div>
@@ -42,7 +41,8 @@ class Slider extends React.Component {
 			return null;
 	}
 	componentWillReceiveProps(nextProps) {
-		this.setState({containerHeight:this.props.heights.containerHeight,contentHeight:this.props.heights.contentHeight})	
+		console.log(nextProps)
+		this.setState({needsSlider:(nextProps.containerHeight >= nextProps.contentHeight) ? false:true,containerHeight:nextProps.heights.containerHeight,contentHeight:nextProps.heights.contentHeight})	
 	}
 }
 module.exports = Slider;

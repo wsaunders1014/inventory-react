@@ -1243,7 +1243,6 @@ bold {
   height: 50px;
   position: absolute;
   z-index: 100;
-  display: none;
   cursor: pointer;
 }
 #wrapper #back-btn a {

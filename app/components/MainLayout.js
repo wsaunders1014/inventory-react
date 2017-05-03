@@ -6,6 +6,7 @@ class Main extends React.Component{
   constructor(props){
     super(props);
     this.state = {
+      doneFetch:false,
       user:{
         total:0,
         totalVol:0,
@@ -32,21 +33,24 @@ class Main extends React.Component{
           }
         }
       },
-      items:''
+      items:'',
+      activeCat:''
     }
     this.addCategory = this.addCategory.bind(this);
     this.removeCategory = this.removeCategory.bind(this);
   }
   addCategory(cat){
-    //onClick, make Category
-    //console.log(this.state);
     this.setState((prevState,props) => {
-      return prevState.user.inventory_obj.categories[cat].isActive = true;
+      prevState.user.inventory_obj.categories[cat].isActive = true;
+      prevState.activeCat = this.getFirstActiveCat(prevState.user.inventory_obj.categories);
+      return prevState;
     });
   }
   removeCategory(cat){
      this.setState((prevState,props) => {
-      return prevState.user.inventory_obj.categories[cat].isActive = false;
+       prevState.user.inventory_obj.categories[cat].isActive = false;
+       prevState.activeCat = this.getFirstActiveCat(prevState.user.inventory_obj.categories);
+       return prevState;
     });
   }
   save(){
@@ -66,13 +70,16 @@ class Main extends React.Component{
         user:this.state.user,
         addItem: this.addItem,
         removeItem:this.removeItem,
-        items:this.state.items
+        items:this.state.items,
+        doneFetch:this.state.doneFetch,
+        activeCat:this.state.activeCat
       }
     }else{
       propsObj ={
         user:this.state.user,
         addCategory: this.addCategory,
-        removeCategory:this.removeCategory
+        removeCategory:this.removeCategory,
+        doneFetch:this.state.doneFetch
       }
     }
     //var propsObj
@@ -80,7 +87,7 @@ class Main extends React.Component{
 		<div style={{minHeight:'calc(100% - 145px)',overflow:'visible',width:'100%'}}>
 			<div id="wrapper" className="clearfix" >
 				<ProgressBar/>
-           {this.props.children && React.cloneElement(this.props.children, propsObj)}
+          {this.props.children && React.cloneElement(this.props.children, propsObj)}
         <div className="clearfix">
           <SaveBtn user={this.state.user} save={this.save}/>
         </div>
@@ -88,8 +95,19 @@ class Main extends React.Component{
 		</div>
 		)
 	}
-
+  getFirstActiveCat(obj) {
+    var keys = Object.keys(obj);
+    //console.log(keys);
+    for(var i =0;i<keys.length;i++){
+      if(obj[keys[i]].isActive){
+        return keys[i];
+        break;
+      }
+    }
+    return '';
+  }
   componentDidMount() {
+
     var that = this;
     fetch('/inv/test').then((response)=>{
       if(response.status >= 400){
@@ -98,7 +116,8 @@ class Main extends React.Component{
       return response.json();
     }).then(function(data){
       data[0].inventory_obj = JSON.parse(data[0].inventory_obj);
-      that.setState({user:data[0]});
+      var x = that.getFirstActiveCat( data[0].inventory_obj.categories);
+      that.setState({user:data[0],activeCat:x,doneFetch:true});
     });
 
     fetch('/js/items-list.json').then((response)=>{
@@ -110,5 +129,6 @@ class Main extends React.Component{
       that.setState({items: data});
     });
   }
+
 }
 module.exports = Main;
