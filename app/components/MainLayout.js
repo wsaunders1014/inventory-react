@@ -1,6 +1,6 @@
 var React = require('react');
 var ProgressBar = require('./ProgressBar');
-
+var items = require('../items-list.json');
 var SaveBtn = require('./SaveBtn');
 class Main extends React.Component{
   constructor(props){
@@ -33,7 +33,7 @@ class Main extends React.Component{
           }
         }
       },
-      items:'',
+      items:items,
       activeCat:''
     }
     this.addCategory = this.addCategory.bind(this);
@@ -107,7 +107,6 @@ class Main extends React.Component{
     return '';
   }
   componentDidMount() {
-
     var that = this;
     fetch('/inv/test').then((response)=>{
       if(response.status >= 400){
@@ -120,14 +119,14 @@ class Main extends React.Component{
       that.setState({user:data[0],activeCat:x,doneFetch:true});
     });
 
-    fetch('/js/items-list.json').then((response)=>{
-      if(response.status >=400){
-        throw new Error('Bad response from server');
-      }
-      return response.json();
-    }).then(function(data){
-      that.setState({items: data});
-    });
+    // fetch('/js/items-list.json').then((response)=>{
+    //   if(response.status >=400){
+    //     throw new Error('Bad response from server');
+    //   }
+    //   return response.json();
+    // }).then(function(data){
+    //   that.setState({items: data});
+    // });
   }
 
 }
