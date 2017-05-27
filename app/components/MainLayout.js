@@ -1,6 +1,6 @@
 var React = require('react');
 var ProgressBar = require('./ProgressBar');
-var items = require('../items-list.json');
+var itemsList = require('../items-list.json');
 var SaveBtn = require('./SaveBtn');
 class Main extends React.Component{
   constructor(props){
@@ -33,13 +33,14 @@ class Main extends React.Component{
           }
         }
       },
-      items:items,
+      items:itemsList,
       activeCat:''
     }
     this.addCategory = this.addCategory.bind(this);
     this.removeCategory = this.removeCategory.bind(this);
   }
   addCategory(cat){
+    console.log('Add Category:' + cat)
     this.setState((prevState,props) => {
       prevState.user.inventory_obj.categories[cat].isActive = true;
       prevState.activeCat = this.getFirstActiveCat(prevState.user.inventory_obj.categories);
@@ -47,6 +48,7 @@ class Main extends React.Component{
     });
   }
   removeCategory(cat){
+    console.log('Remove Category:' + cat)
      this.setState((prevState,props) => {
        prevState.user.inventory_obj.categories[cat].isActive = false;
        prevState.activeCat = this.getFirstActiveCat(prevState.user.inventory_obj.categories);
@@ -64,8 +66,10 @@ class Main extends React.Component{
     console.log('remove item')
   }
 	render(){
+    console.log('main.js render')
     var propsObj = {}
-    if(this.props.location.pathname == '/large-items'){
+    console.log(this.props.location.pathname);
+    if(this.props.location.pathname == 'large-items'){
       propsObj ={
         user:this.state.user,
         addItem: this.addItem,

@@ -10,7 +10,7 @@
 6 silly lifecycle react-starter@1.0.0~prenodeStart: no script for prenodeStart, continuing
 7 info lifecycle react-starter@1.0.0~nodeStart: react-starter@1.0.0
 8 verbose lifecycle react-starter@1.0.0~nodeStart: unsafe-perm in lifecycle true
-9 verbose lifecycle react-starter@1.0.0~nodeStart: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Applications/MAMP/htdocs/reactStarter/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+9 verbose lifecycle react-starter@1.0.0~nodeStart: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Applications/MAMP/htdocs/reactStarter/node_modules/.bin:/Users/Equate/.composer/vendor/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 10 verbose lifecycle react-starter@1.0.0~nodeStart: CWD: /Applications/MAMP/htdocs/reactStarter
 11 silly lifecycle react-starter@1.0.0~nodeStart: Args: [ '-c', 'node server.js' ]
 12 silly lifecycle react-starter@1.0.0~nodeStart: Returned: code: 1  signal: null

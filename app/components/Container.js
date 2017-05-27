@@ -3,10 +3,10 @@ var Slider = require('./Slider');
 class Container extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state= {containerHeight:412,contentHeight: 412,heading:this.props.heading}
+		this.state= {containerHeight:412, contentHeight: 412, heading:this.props.heading}
 	}
 	render(){
-		console.log('Container.js render')
+		//console.log('Container.js render')
 		return (
 			<div id={this.props.id} className='main' ref={(container)=>{
 				this.domObj = container;
