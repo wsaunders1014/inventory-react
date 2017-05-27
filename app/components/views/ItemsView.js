@@ -4,6 +4,7 @@ var Sidebar = require('../Sidebar');
 var ReactRouter = require('react-router');
 var Link = ReactRouter.Link;
 var ItemsView = function(props){
+	console.log(props)
 	return (
 		<div id="content" className="clearfix">
 			<Items id="items" type="items" addItem={props.addItem} removeItem={props.removeItem} items={props.items} user={props.user} heading={props.activeCat} />
