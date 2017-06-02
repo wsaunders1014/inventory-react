@@ -57,7 +57,7 @@ class Main extends React.Component{
   }
   save(){
     //TO DO: upload user obj to mysql
-    console.log('save test')
+    //console.log('save function')
   }
   addItem(){
     console.log('add item')
@@ -68,8 +68,7 @@ class Main extends React.Component{
 	render(){
     console.log('main.js render')
     var propsObj = {}
-    console.log(this.props.location.pathname);
-    if(this.props.location.pathname == 'large-items'){
+    if(this.props.location.pathname.includes('large-items')){
       propsObj ={
         user:this.state.user,
         addItem: this.addItem,

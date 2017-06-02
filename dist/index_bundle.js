@@ -8618,7 +8618,7 @@ var Container = function (_React$Component) {
 
 		var _this = _possibleConstructorReturn(this, (Container.__proto__ || Object.getPrototypeOf(Container)).call(this, props));
 
-		_this.state = { containerHeight: 412, contentHeight: 412, heading: _this.props.heading };
+		_this.state = { containerHeight: _this.props.containerHeight, contentHeight: _this.props.contentHeight, heading: _this.props.heading };
 		return _this;
 	}
 
@@ -8649,14 +8649,16 @@ var Container = function (_React$Component) {
 	}, {
 		key: 'componentWillReceiveProps',
 		value: function componentWillReceiveProps(nextProps) {
-			console.log('ContainerWillReceiveProps: ' + this.domObj.children[1].firstChild.clientHeight);
-			this.setState({ containerHeight: this.domObj.children[1].clientHeight, contentHeight: this.domObj.children[1].firstChild.clientHeight });
+			console.log('ContainerWillReceiveProps: ' + this.domObj.children[1].firstChild.clientHeight, this.domObj.children[1].firstChild.clientHeight);
+			//this.setState({containerHeight:this.domObj.children[1].clientHeight, contentHeight:this.domObj.children[1].firstChild.clientHeight})
 		}
 	}, {
 		key: 'componentDidMount',
 		value: function componentDidMount() {
+			console.log(this.domObj);
 			// console.log('didMount: '+this.domObj.children[1].firstChild.clientHeight)
-			// this.setState({containerHeight:this.domObj.children[1].clientHeight, contentHeight:this.domObj.children[1].firstChild.clientHeight})
+			console.log('DidMount: ' + this.domObj.children[1].firstChild.clientHeight, this.domObj.children[1].firstChild.clientHeight);
+			//this.setState({containerHeight:this.domObj.children[1].clientHeight, contentHeight:this.domObj.children[1].firstChild.clientHeight})
 		}
 	}]);
 
@@ -20023,7 +20025,7 @@ var Categories = function (_React$Component) {
 			console.log('Categories.js render');
 			return React.createElement(
 				Container,
-				{ doneFetch: this.props.doneFetch, id: this.props.id, heading: this.props.heading },
+				{ doneFetch: this.props.doneFetch, id: this.props.id, heading: this.props.heading, containerHeight: '412', contentHeight: '412' },
 				Object.keys(this.props.user.inventory_obj.categories).map(function (item, index) {
 					if (item != 'Boxes') {
 						if (_this2.props.user.inventory_obj.categories[item].isActive !== true) return React.createElement(Category, { addCategory: _this2.props.addCategory, key: item, title: item, className: 'item animate-in', index: index });else return React.createElement(Category, { addCategory: _this2.props.addCategory, key: item, title: item, className: 'item selected', index: index });
@@ -20074,14 +20076,18 @@ var Items = function (_React$Component) {
 		value: function render() {
 			var _this2 = this;
 
-			console.log('Items render', this.props);
 			return React.createElement(
 				Container,
-				{ id: this.props.id, heading: this.props.heading },
+				{ id: this.props.id, heading: this.props.heading, contentHeight: '412', containerHeight: '361' },
 				Object.keys(this.props.items).map(function (index) {
 					if (_this2.props.items[index].category === _this2.props.heading) return React.createElement(Item, { key: index, itemObj: _this2.props.items[index], title: _this2.props.items[index].item_name, className: 'item', index: index });
 				})
 			);
+		}
+	}, {
+		key: 'componentDidMount',
+		value: function componentDidMount() {
+			console.log('Items Did Mount');
 		}
 	}]);
 
@@ -20182,7 +20188,7 @@ var Main = function (_React$Component) {
     key: 'save',
     value: function save() {
       //TO DO: upload user obj to mysql
-      console.log('save test');
+      //console.log('save function')
     }
   }, {
     key: 'addItem',
@@ -20199,8 +20205,7 @@ var Main = function (_React$Component) {
     value: function render() {
       console.log('main.js render');
       var propsObj = {};
-      console.log(this.props.location.pathname);
-      if (this.props.location.pathname == 'large-items') {
+      if (this.props.location.pathname.includes('large-items')) {
         propsObj = {
           user: this.state.user,
           addItem: this.addItem,
@@ -20581,7 +20586,6 @@ var Sidebar = __webpack_require__(74);
 var ReactRouter = __webpack_require__(44);
 var Link = ReactRouter.Link;
 var ItemsView = function ItemsView(props) {
-	console.log(props);
 	return React.createElement(
 		'div',
 		{ id: 'content', className: 'clearfix' },
