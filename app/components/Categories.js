@@ -5,7 +5,7 @@ class Categories extends React.Component {
 	render(){
 		console.log('Categories.js render')
 		return(
-			<Container doneFetch={this.props.doneFetch} id={this.props.id} heading={this.props.heading}>
+			<Container doneFetch={this.props.doneFetch} id={this.props.id} heading={this.props.heading} containerHeight='412' contentHeight='412'>
 				{
 					Object.keys(this.props.user.inventory_obj.categories).map((item,index)=>{
 						if(item != 'Boxes') {
